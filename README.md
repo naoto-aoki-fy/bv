@@ -1,6 +1,6 @@
-# Binary Value Examples
+# Binary Value
 
-This repository demonstrates how to write and read simple binary files that contain multiple fields of floating-point data.
+This repository includes programs to write and read simple binary files that contain multiple fields of floating-point data.
 
 ## Files
 - `write_bv.cpp`: C++ program that writes a binary file `out.bin` with four `float64` fields (`a`, `b`, `c`, `d`).
