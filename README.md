@@ -1,4 +1,4 @@
-# Binary Value
+# Binary Values
 
 This repository includes programs to write and read simple binary files that contain multiple fields of floating-point data.
 
