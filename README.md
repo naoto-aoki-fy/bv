@@ -23,7 +23,13 @@ g++ -std=c++17 -I include examples/write_bv.cpp -o write_bv
 
 ## Python usage
 
-Add the `python` directory to `PYTHONPATH` and import the `bv` package:
+Install the reader directly from this repository:
+
+```bash
+pip install git+https://github.com/<user>/bv.git
+```
+
+Alternatively, add the `python` directory to `PYTHONPATH` and import the `bv` package:
 
 ```bash
 PYTHONPATH=python python examples/read_bv.py

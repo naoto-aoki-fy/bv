@@ -4,6 +4,9 @@ from typing import List
 
 import numpy as np
 
+__all__ = ["BVFile", "read_bv"]
+__version__ = "0.1.0"
+
 
 @dataclass
 class BVFile:
