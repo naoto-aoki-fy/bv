@@ -6,6 +6,8 @@ This repository provides a simple binary table format with:
 - A Python reader package located in `python/bv`.
 - Example programs in `examples`.
 
+It supports `float32`, `float64`, and 8-, 16-, 32-, and 64-bit signed and unsigned integers.
+
 ## C++ usage
 
 Add the `include` directory to your include path and include the header:

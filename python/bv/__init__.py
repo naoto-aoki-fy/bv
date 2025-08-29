@@ -30,7 +30,18 @@ class BVFile:
         return self.data[:, idx]
 
     def gnuplot_format(self) -> str:
-        dt_map = {np.float64: "double", np.float32: "float"}
+        dt_map = {
+            np.float64: "double",
+            np.float32: "float",
+            np.int64: "int64",
+            np.int32: "int32",
+            np.int16: "int16",
+            np.int8: "int8",
+            np.uint64: "uint64",
+            np.uint32: "uint32",
+            np.uint16: "uint16",
+            np.uint8: "uint8",
+        }
         fmt = dt_map.get(self.dtype)
         if fmt is None:
             raise ValueError(f"Unsupported dtype {self.dtype} for gnuplot")

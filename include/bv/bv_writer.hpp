@@ -6,6 +6,7 @@
 #include <vector>
 #include <stdexcept>
 #include <type_traits>
+#include <cstdint>
 
 namespace bv {
 
@@ -63,6 +64,22 @@ private:
             return "float32";
         } else if constexpr (std::is_same<T, double>::value) {
             return "float64";
+        } else if constexpr (std::is_same<T, std::int64_t>::value) {
+            return "int64";
+        } else if constexpr (std::is_same<T, std::int32_t>::value) {
+            return "int32";
+        } else if constexpr (std::is_same<T, std::int16_t>::value) {
+            return "int16";
+        } else if constexpr (std::is_same<T, std::int8_t>::value) {
+            return "int8";
+        } else if constexpr (std::is_same<T, std::uint64_t>::value) {
+            return "uint64";
+        } else if constexpr (std::is_same<T, std::uint32_t>::value) {
+            return "uint32";
+        } else if constexpr (std::is_same<T, std::uint16_t>::value) {
+            return "uint16";
+        } else if constexpr (std::is_same<T, std::uint8_t>::value) {
+            return "uint8";
         } else {
             static_assert(sizeof(T) == 0, "unsupported type");
             return "";
