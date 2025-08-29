@@ -11,6 +11,20 @@ machine endianness (e.g. `# endian = little`).
 
 It supports `float32`, `float64`, and 8-, 16-, 32-, and 64-bit signed and unsigned integers.
 
+## File format
+
+A file written with this library starts with ASCII header lines prefixed by `#`:
+
+```
+# binary values
+# fields = field1, field2, ...
+# dtype = float64
+# endian = little
+# padding
+```
+
+The `# padding` line includes spaces so that the first byte of binary data is 8-byte aligned. The remainder of the file contains the table data in row-major order, where each row stores the listed fields as the given `dtype` using the recorded endianness.
+
 ## C++ usage
 
 Add the `include` directory to your include path and include the header:
