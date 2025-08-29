@@ -1,9 +1,10 @@
 # Binary Values
 
-This repository includes programs to write and read simple binary files that contain multiple fields of floating-point data.
+This repository includes programs and headers to write and read simple binary files that contain multiple fields of floating-point data.
 
 ## Files
-- `write_bv.cpp`: C++ program that writes a binary file `out.bin` with four `float64` fields (`a`, `b`, `c`, `d`).
+- `bv_writer.hpp`: Header-only C++ library for writing binary tables. The data type string in the output is automatically determined from the template parameter.
+- `write_bv.cpp`: Example program that uses `bv_writer.hpp` to write a binary file `out.bin` with four `float64` fields (`a`, `b`, `c`, `d`).
 - `read_bv.py`: Python script that parses `out.bin` and loads the fields into NumPy arrays using memory mapping.
 
 ## Usage
