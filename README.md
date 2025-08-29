@@ -40,7 +40,17 @@ From another project you can simply:
 ```python
 from bv import read_bv
 bv_file = read_bv("out.bin")
-print(bv_file.gnuplot_command("1:2"))
 ```
 
-This prints the field names, data type and a gnuplot command for plotting.
+## Gnuplot usage
+
+You can obtain the binary format information and a ready-to-use command directly from the Python interface:
+```python
+from bv import read_bv
+bv = read_bv("out.bin")
+print(bv.gnuplot_command())
+```
+If the file contains three `float64` fields starting at byte offset `104`, this prints:
+```gnuplot
+plot "out.bin" binary skip=104 format="%3double"
+```
