@@ -16,22 +16,31 @@ class BVFile:
     fields: List[str]
     dtype: np.dtype
     endian: str
+    data: np.memmap
 
-    @property
-    def data(self) -> np.memmap:
+    def __init__(self, path: str, offset: int, fields: List[str], dtype: np.dtype, endian: str):
+        self.path = path
+        self.offset = offset
+        self.fields = fields
+        self.dtype = dtype
+        self.endian = endian
+        self.data = None
+
         num_fields = len(self.fields)
         itemsize = np.dtype(self.dtype).itemsize
         file_size = os.path.getsize(self.path)
         num_rows, remainder = divmod(file_size - self.offset, itemsize * num_fields)
         if remainder != 0:
             raise ValueError("File size does not match header information")
-        return np.memmap(self.path, dtype=self.dtype, mode="r", offset=self.offset, shape=(num_rows, num_fields))
+        self.data = np.memmap(self.path, dtype=self.dtype, mode="r", offset=self.offset, shape=(num_rows, num_fields))
+        for field_num, field_name in enumerate(self.fields):
+            setattr(self, field_name, self.data[:, field_num])
 
     def __getitem__(self, field: str):
         idx = self.fields.index(field)
         return self.data[:, idx]
 
-    def gnuplot_format(self) -> str:
+    def _gnuplot_format(self) -> str:
         dt_map = {
             np.float64: "double",
             np.float32: "float",
@@ -50,7 +59,7 @@ class BVFile:
         return f"%{len(self.fields)}{fmt}"
 
     def gnuplot_command(self) -> str:
-        fmt = self.gnuplot_format()
+        fmt = self._gnuplot_format()
         return f'plot "{self.path}" binary skip={self.offset} format="{fmt}"'
 
 

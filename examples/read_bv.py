@@ -7,4 +7,5 @@ if __name__ == "__main__":
     print(f"dtype={bv.dtype}")
     print(bv.data)
     print(bv["a"])
+    print(bv.a)
     print(bv.gnuplot_command())
