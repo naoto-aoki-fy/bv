@@ -6,4 +6,5 @@ if __name__ == "__main__":
     print(f"fields={bv.fields}")
     print(f"dtype={bv.dtype}")
     print(bv.data)
-    print(bv.gnuplot_command("1:2"))
+    print(bv["a"])
+    print(bv.gnuplot_command())
