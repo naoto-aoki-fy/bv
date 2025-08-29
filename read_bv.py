@@ -11,7 +11,7 @@ while True:
         break
     line = fp.readline()
     lines.append(line)
-print(lines)
+# print(lines)
 fpos = fp.tell() - 1
 fp.close()
 
@@ -33,6 +33,7 @@ for line in lines:
     elif b'padding' in line:
         pass
 
+print(f"{fpos=}")
 print(f"{fieldname_list=}")
 print(f"{dtype=}")
 
