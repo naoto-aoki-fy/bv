@@ -6,6 +6,9 @@ This repository provides a simple binary table format with:
 - A Python reader package located in `python/bv`.
 - Example programs in `examples`.
 
+Files begin with a small text header describing the data type, fields, and
+machine endianness (e.g. `# endian = little`).
+
 It supports `float32`, `float64`, and 8-, 16-, 32-, and 64-bit signed and unsigned integers.
 
 ## C++ usage
@@ -15,6 +18,10 @@ Add the `include` directory to your include path and include the header:
 ```cpp
 #include <bv/bv_writer.hpp>
 ```
+
+The header defines `BV_ENDIAN_LITTLE` and `BV_ENDIAN_BIG` macros so you can
+check the machine's endianness at compile time. The writer records this
+information in the file header.
 
 Example build and run:
 

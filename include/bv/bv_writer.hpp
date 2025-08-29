@@ -8,6 +8,19 @@
 #include <type_traits>
 #include <cstdint>
 
+// Determine machine endianness at compile time
+#if defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#define BV_ENDIAN_LITTLE 1
+#define BV_ENDIAN_BIG 0
+#define BV_ENDIAN_STR "little"
+#elif defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+#define BV_ENDIAN_LITTLE 0
+#define BV_ENDIAN_BIG 1
+#define BV_ENDIAN_STR "big"
+#else
+#error "Unknown machine endianness"
+#endif
+
 namespace bv {
 
 template<typename T>
@@ -33,6 +46,7 @@ public:
         fputs("# dtype = ", fp_);
         fputs(dtype, fp_);
         fputs("\n", fp_);
+        fputs("# endian = " BV_ENDIAN_STR "\n", fp_);
         fputs("# padding", fp_);
         long const fpos = ftell(fp_);
         int const remainder = (fpos + 1) & 7;

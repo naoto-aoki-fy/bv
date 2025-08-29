@@ -1,4 +1,5 @@
 import os
+import sys
 from dataclasses import dataclass
 from typing import List
 
@@ -14,6 +15,7 @@ class BVFile:
     offset: int
     fields: List[str]
     dtype: np.dtype
+    endian: str
 
     @property
     def data(self) -> np.memmap:
@@ -65,6 +67,7 @@ def read_bv(path: str) -> BVFile:
 
     fields: List[str] = []
     dtype = None
+    endian = None
     for line in lines:
         eq_pos = line.find(b"=")
         if eq_pos > 0:
@@ -74,6 +77,10 @@ def read_bv(path: str) -> BVFile:
                 fields = [f.strip().decode() for f in value.split(b",")]
             elif key == b"dtype":
                 dtype = getattr(np, value.decode())
-    if dtype is None or not fields:
+            elif key == b"endian":
+                endian = value.decode()
+    if dtype is None or not fields or endian is None:
         raise ValueError("Missing header information")
-    return BVFile(path=path, offset=offset, fields=fields, dtype=dtype)
+    if endian != sys.byteorder:
+        raise ValueError(f"Endianness mismatch: file is {endian}, machine is {sys.byteorder}")
+    return BVFile(path=path, offset=offset, fields=fields, dtype=dtype, endian=endian)
