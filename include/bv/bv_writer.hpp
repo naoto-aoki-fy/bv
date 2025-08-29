@@ -23,6 +23,29 @@
 
 namespace bv {
 
+namespace detail {
+
+template <typename T>
+struct dtype_string {
+    static const char* value() {
+        static_assert(sizeof(T) == 0, "unsupported type");
+        return "";
+    }
+};
+
+template <> struct dtype_string<float> { static const char* value() { return "float32"; } };
+template <> struct dtype_string<double> { static const char* value() { return "float64"; } };
+template <> struct dtype_string<std::int64_t> { static const char* value() { return "int64"; } };
+template <> struct dtype_string<std::int32_t> { static const char* value() { return "int32"; } };
+template <> struct dtype_string<std::int16_t> { static const char* value() { return "int16"; } };
+template <> struct dtype_string<std::int8_t> { static const char* value() { return "int8"; } };
+template <> struct dtype_string<std::uint64_t> { static const char* value() { return "uint64"; } };
+template <> struct dtype_string<std::uint32_t> { static const char* value() { return "uint32"; } };
+template <> struct dtype_string<std::uint16_t> { static const char* value() { return "uint16"; } };
+template <> struct dtype_string<std::uint8_t> { static const char* value() { return "uint8"; } };
+
+} // namespace detail
+
 template<typename T>
 class writer {
 public:
@@ -74,30 +97,7 @@ public:
 
 private:
     static const char* expected_dtype() {
-        if constexpr (std::is_same<T, float>::value) {
-            return "float32";
-        } else if constexpr (std::is_same<T, double>::value) {
-            return "float64";
-        } else if constexpr (std::is_same<T, std::int64_t>::value) {
-            return "int64";
-        } else if constexpr (std::is_same<T, std::int32_t>::value) {
-            return "int32";
-        } else if constexpr (std::is_same<T, std::int16_t>::value) {
-            return "int16";
-        } else if constexpr (std::is_same<T, std::int8_t>::value) {
-            return "int8";
-        } else if constexpr (std::is_same<T, std::uint64_t>::value) {
-            return "uint64";
-        } else if constexpr (std::is_same<T, std::uint32_t>::value) {
-            return "uint32";
-        } else if constexpr (std::is_same<T, std::uint16_t>::value) {
-            return "uint16";
-        } else if constexpr (std::is_same<T, std::uint8_t>::value) {
-            return "uint8";
-        } else {
-            static_assert(sizeof(T) == 0, "unsupported type");
-            return "";
-        }
+        return detail::dtype_string<T>::value();
     }
 
     FILE* fp_;

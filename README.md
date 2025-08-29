@@ -26,7 +26,7 @@ information in the file header.
 Example build and run:
 
 ```bash
-g++ -std=c++17 -I include examples/write_bv.cpp -o write_bv
+g++ -std=c++11 -I include examples/write_bv.cpp -o write_bv
 ./write_bv out.bin
 ```
 
