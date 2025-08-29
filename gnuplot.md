@@ -1,15 +1,13 @@
 # Guide to use bv in gnuplot
 
-Get format information with python. example output:
+You can obtain the binary format information and a ready-to-use command directly from the Python interface:
+```python
+from bv import read_bv
+bv = read_bv("out.bin")
+print(bv.gnuplot_command("1:2"))
 ```
-fpos=104
-fieldname_list=['a', 'b', 'c']
-dtype=<class 'numpy.float64'>
-...
-```
-You find the offset is 104, the number of fields is 3, and dtype is float64.
-
-Then, a gnuplot command for example is
+If the file contains three `float64` fields starting at byte offset `104`, this prints:
 ```gnuplot
 plot "out.bin" binary skip=104 format="%3double" using 1:2
 ```
+You may adjust the column indices in the `using` clause to plot different fields.
