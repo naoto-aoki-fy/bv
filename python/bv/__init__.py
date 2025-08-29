@@ -36,9 +36,9 @@ class BVFile:
             raise ValueError(f"Unsupported dtype {self.dtype} for gnuplot")
         return f"%{len(self.fields)}{fmt}"
 
-    def gnuplot_command(self, using: str = "1:2") -> str:
+    def gnuplot_command(self) -> str:
         fmt = self.gnuplot_format()
-        return f'plot "{self.path}" binary skip={self.offset} format="{fmt}" using {using}'
+        return f'plot "{self.path}" binary skip={self.offset} format="{fmt}"'
 
 
 def read_bv(path: str) -> BVFile:
